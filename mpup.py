@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+"""Upload file to Micropython"""
 import serial
 import time
 import click
@@ -11,6 +11,7 @@ import click
 @click.option('--reset/--no-reset', '-r', help='send soft reset (ctrl-d) after upload')
 @click.argument('files', nargs=-1, type=click.File('rb'))
 def cli():
+    """Main cli entrypoint"""
     port = serial.Serial(args.port, args.baud)
     if args.interrupt:
         port.write(bytes('\x03', 'ascii'))
