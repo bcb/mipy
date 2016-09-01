@@ -1,20 +1,16 @@
 #!/usr/bin/env python
 import serial
 import time
-import argparse
+import click
 
-parser = argparse.ArgumentParser(
-    description="upload files to a device using only the REPL"
-)
-parser.add_argument('--port', default='/dev/ttyUSB0', help='serial port device')
-parser.add_argument('--baud', default=115200, type=int, help='port speed in baud')
-parser.add_argument('--delay', default=100.0, type=float, help='delay between lines (ms)')
-parser.add_argument('--interrupt', action='store_true', help='send soft interrupt (control-C) before upload')
-parser.add_argument('--reset', action='store_true', help='send soft reset (control-D) after upload')
-parser.add_argument('files', nargs='*', type=argparse.FileType('rb'))
-args = parser.parse_args()
-
-def main():
+@click.command()
+@click.option('--port', '-p', default='/dev/ttyUSB0', help='serial port device')
+@click.option('--baud', '-b', default=115200, help='port speed in baud')
+@click.option('--delay', '-d', default=100.0, help='delay between lines (ms)')
+@click.option('--interrupt/--no-interrupt', '-i', help='send soft interrupt (ctrl-c) before upload')
+@click.option('--reset/--no-reset', '-r', help='send soft reset (ctrl-d) after upload')
+@click.argument('files', nargs=-1, type=click.File('rb'))
+def cli():
     port = serial.Serial(args.port, args.baud)
     if args.interrupt:
         port.write(bytes('\x03', 'ascii'))
@@ -31,6 +27,3 @@ def main():
     if args.reset:
         port.write(bytes('\x04', 'ascii'))
     port.close()
-
-if __name__ == '__main__':
-    main()
