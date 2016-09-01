@@ -22,15 +22,15 @@ if args.interrupt:
 
 for fh in args.files:
 
-  port.write('_fh = open(%s, "w")\r' % repr(fh.name))
+  port.write(bytes('_fh = open(%s, "w")\r' % repr(fh.name), 'ascii'))
 
   while True:
     s = fh.read(50)
     if len(s) == 0: break
-    port.write("_fh.write(%s)\r" % repr(s))
+    port.write(bytes('_fh.write(%s)\r' % repr(s), 'ascii'))
     time.sleep(args.delay/1000.0)
 
-  port.write('_fh.close()\r')
+  port.write(bytes('_fh.close()\r', 'ascii'))
   fh.close()
 
 if args.reset:
