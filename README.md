@@ -1,5 +1,5 @@
 mipy
-****
+====
 
 Copy files to Micropython.
 
