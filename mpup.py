@@ -1,4 +1,4 @@
-"""Upload files to Micropython"""
+"""Manage files with Micropython"""
 import logging
 from os.path import basename
 import serial
@@ -11,6 +11,15 @@ def send(ser, s):
     """Send message to serial device"""
     ser.write(b'%b\r' % s.encode())
     logger.debug(s)
+
+
+def send_file(local_filename):
+    """Send a file to Micropython"""
+    with open(fn) as localfile:
+        s = localfile.read()
+    send(ctx['port'], \
+        'with open({}, "wb") as remotefile: remotefile.write({})\n\r' \
+        .format(repr(basename(local_filename)), repr(s)))
 
 
 @click.group()
@@ -36,12 +45,8 @@ def cli(ctx, baud, interrupt, port):
 @click.pass_obj
 def upload(ctx, reset, files):
     """Upload files to Micropython"""
-    for localfile in files:
-        with open(localfile.name) as lf:
-            s = lf.read()
-        send(ctx['port'], \
-            'with open({}, "wb") as remotefile: remotefile.write({})\n\r' \
-            .format(repr(basename(localfile.name)), repr(s)))
+    for f in files:
+        send_file(f.name)
     if reset:
         send(ctx['port'], '\x04')
     ctx['port'].close()
