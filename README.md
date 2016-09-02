@@ -1,4 +1,8 @@
-# mpy-utils
-Utility programs for Micropython ...
+mipy
+****
 
-* upload.py : copy files in to a device using only the REPL.
+Copy files to Micropython.
+
+```shell
+mipy cp main.py
+```
