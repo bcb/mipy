@@ -16,19 +16,17 @@ def send(ser, s):
 @click.group()
 @click.option('-b', '--baud', metavar='<rate>', default=115200, \
         help='Port speed in baud.')
-@click.option('-d', '--delay', metavar='<delay>', default=100.0, \
-        help='Delay between lines (ms).')
 @click.option('-i', '--interrupt', is_flag=True, \
         help='Send soft interrupt (ctrl-c) before command.')
 @click.option('-p', '--port', metavar='<port>', default='/dev/ttyUSB0', \
         help='Serial port device.')
 @click.pass_context
-def cli(ctx, baud, delay, interrupt, port):
+def cli(ctx, baud, interrupt, port):
     """Manage files with Micropython"""
     port = serial.Serial(port, baud, timeout=1)
     if interrupt:
         send(port, '\x03')
-    ctx.obj = {'port': port, 'delay': delay}
+    ctx.obj = {'port': port}
 
 
 @cli.command()
