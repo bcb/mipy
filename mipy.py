@@ -40,11 +40,11 @@ def cli(ctx, baud, interrupt, port):
 
 @cli.command()
 @click.option('-r', '--reset', is_flag=True, \
-        help='Send soft reset (ctrl-d) after upload.')
+        help='Send soft reset (ctrl-d) after copy.')
 @click.argument('files', nargs=-1, required=True, type=click.File('rb'))
 @click.pass_obj
 def upload(ctx, reset, files):
-    """Upload files to Micropython"""
+    """Copy files to Micropython"""
     for f in files:
         send_file(f.name)
     if reset:
