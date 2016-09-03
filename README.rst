@@ -5,7 +5,7 @@ Copy files to Micropython.
 
 .. sourcecode:: sh
 
-    pip install --user mipy
+    pip install mipy
 
 .. sourcecode:: sh
 
