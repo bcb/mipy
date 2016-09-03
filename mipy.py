@@ -13,7 +13,6 @@ def _debug(message, *args, **kwargs):
 
 
 class Device(object):
-
     def __init__(self, port='/dev/ttyUSB0', baud='115200', interrupt=False,
             reset=False, timeout=1):
         self.port = port
