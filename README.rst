@@ -1,7 +1,7 @@
 mipy
 ****
 
-Copy files to Micropython.
+Copy files to a Micropython device.
 
 .. sourcecode:: sh
 
