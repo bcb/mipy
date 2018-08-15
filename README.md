@@ -2,7 +2,10 @@
 
 Copy files to a Micropython device.
 
+_Requires Python 3.5+._
+
 ```sh
+pip install mipy
 mipy cp main.py
 ```
 
